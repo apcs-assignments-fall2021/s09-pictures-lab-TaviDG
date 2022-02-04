@@ -104,35 +104,79 @@ public class Picture extends SimplePicture
     // Using the zeroBlue method as a starting point, write the method keepOnlyBlue that
     // will keep **only** the blue values, that is, it will set the red and green values to zero
     public void keepOnlyBlue() {
-        // YOUR CODE HERE
+        Pixel[][] pixels = this.getPixels2D();
+        for (int row = 0; row < pixels.length; row++) {
+            for (int col = 0; col < pixels[0].length; col++) {
+                Pixel pix = pixels[row][col];
+                pix.setRed(0);
+                pix.setGreen(0);
+            }
+        }
     }
 
     // Write the negate method to negate all the pixels in a picture. To negate a picture, set the red
     // value to 255 minus the current red value, the green value to 255 minus the current green value
     // and the blue value to 255 minus the current blue value.
     public void negate() {
-        // YOUR CODE HERE
+        Pixel[][] pixels = this.getPixels2D();
+        for (int row = 0; row < pixels.length; row++) {
+            for (int col = 0; col < pixels[0].length; col++) {
+                Pixel pix = pixels[row][col];
+                pix.setRed(255-pix.getRed());
+                pix.setGreen(255-pix.getGreen());
+                pix.setBlue(255-pix.getBlue());
+            }
+        }
     }
 
     // Write the grayscale method to turn the picture into shades of gray. Set the red, green, and
     // blue values to the average of the current red, green, and blue values (add all three values and
     // divide by 3).
     public void grayscale() {
-        // YOUR CODE HERE
-    }
+        Pixel[][] pixels = this.getPixels2D();
+        for (int row = 0; row < pixels.length; row++) {
+            for (int col = 0; col < pixels[0].length; col++) {
+                Pixel pix = pixels[row][col];
+                int avg = pix.getBlue() + pix.getGreen() + pix.getRed();
+                avg /= 3;
+                pix.setRed(avg);
+                pix.setGreen(avg);
+                pix.setBlue(avg);
 
+            }
+        }
+    }
     // Write the mirrorCopy method which mirrors and copies the left side of the image
     // onto the right side of the image
     // Note: you should set the colors values of the pixel you are changing with the
     // setter methods rather than trying to copy the actual pixel
     public void mirrorCopy() {
-        // YOUR CODE HERE
+        Pixel[][] pixels = this.getPixels2D();
+        for (int row = 0; row < pixels.length; row++) {
+            for (int col = 0; col < pixels[0].length/2; col++) {
+                Pixel pix = pixels[row][col];
+                Pixel pix2 = pixels[row][pixels[0].length-1-col];
+                pix2.setBlue(pix.getBlue());
+                pix2.setRed(pix.getRed());
+                pix2.setGreen(pix.getGreen());
+
+            }
+        }
     }
 
     // Bonus — Explore the "water.jpg" picture in the images folder. Write a method
     // fixUnderwater() to modify the pixel colors to make the fish easier to see
     public void fixUnderwater() {
-        // YOUR CODE HERE
+        Pixel[][] pixels = this.getPixels2D();
+        for (int row = 0; row < pixels.length; row++) {
+            for (int col = 0; col < pixels[0].length; col++) {
+                Pixel pix = pixels[row][col];
+                pix.setGreen(pix.getGreen()-70);
+                pix.setBlue(pix.getBlue()-45);
+                pix.setRed(pix.getRed()+60);
+
+            }
+        }
     }
 
     // Challenge — Write the mirrorDiagonal method that mirrors just a square part of the picture
@@ -140,7 +184,18 @@ public class Picture extends SimplePicture
     // is the one where the row index equals the column index).
     // This will copy the triangular area to the left and below the diagonal line
     public void mirrorDiagonal() {
-        // YOUR CODE HERE
+        Pixel[][] pixels = this.getPixels2D();
+        for (int row = 0; row < pixels.length; row++) {
+            for (int col = 0; col <= row; col++) {
+                Pixel pix = pixels[row][col];
+                int distance = row-col;
+                Pixel pix2 = pixels[row-distance][row];
+                pix2.setBlue(pix.getBlue());
+                pix2.setRed(pix.getRed());
+                pix2.setGreen(pix.getGreen());
+
+            }
+        }
     }
 
     /* Main method for testing - each class in Java can have a main
@@ -151,8 +206,19 @@ public class Picture extends SimplePicture
 //        Picture pic = new Picture("water.jpg");
 
         // The explore method makes a pop-up window of the current picture
+        pic.explore();
+//        pic.zeroBlue();
+//        pic.keepOnlyBlue();
 //        pic.explore();
-        pic.zeroBlue();
+//        pic.negate();
+//        pic.explore();
+//        pic.grayscale();
+//        pic.explore();
+//        pic.mirrorCopy();
+//        pic.explore();
+//        pic.mirrorDiagonal();
+//        pic.fixUnderwater();
+
         pic.explore();
     }
 
